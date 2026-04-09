@@ -3,333 +3,281 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FEESTJE — Cadeau voor Steyn</title>
+  <title>GiftLink Demo</title>
   <style>
     :root {
-      --bg: #050505;
-      --panel: #0d0d0d;
-      --panel-2: #111111;
-      --text: #f5f5f5;
-      --muted: #9fa3a7;
-      --line: rgba(255,255,255,0.12);
-      --accent: #b6ff00;
-      --accent-2: #7fff00;
-      --danger: #ff5f57;
-      --shadow: 0 20px 50px rgba(0,0,0,0.45);
+      --bg: #0b0f14;
+      --card: #121922;
+      --card-2: #182332;
+      --text: #eef4ff;
+      --muted: #9fb0c7;
+      --line: #243246;
+      --accent: #00d084;
+      --accent-2: #00a66a;
+      --danger: #ff7b7b;
+      --warning: #ffd166;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
       --radius: 22px;
     }
 
     * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      background:
-        radial-gradient(circle at top right, rgba(182,255,0,0.12), transparent 26%),
-        linear-gradient(180deg, #050505 0%, #090909 100%);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      min-height: 100%;
-    }
-
     body {
-      display: flex;
-      justify-content: center;
-      padding: 28px 14px;
-    }
-
-    .phone {
-      width: 100%;
-      max-width: 430px;
-      min-height: calc(100vh - 28px);
-      border: 1px solid var(--line);
-      border-radius: 32px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-        var(--bg);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .noise::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.22;
-      mix-blend-mode: screen;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 18px 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .brand {
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      font-size: 0.9rem;
-    }
-
-    .brand-dot { color: var(--accent); }
-
-    .chip {
-      border: 1px solid var(--line);
-      color: var(--muted);
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .hero {
-      padding: 10px 18px 6px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      margin-bottom: 12px;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 22px;
-      height: 1px;
-      background: var(--accent);
-      display: inline-block;
-    }
-
-    h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 8vw, 3.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0,208,132,.13), transparent 30%),
+        radial-gradient(circle at top right, rgba(255,209,102,.08), transparent 26%),
+        linear-gradient(180deg, #0b0f14 0%, #0d1219 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 18px 60px;
     }
 
-    .subline {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.5;
-    }
-
-    .accent-line {
-      margin-top: 16px;
-      width: 110px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      border-radius: 999px;
-    }
-
-    .grid {
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
       display: grid;
-      gap: 12px;
-      padding: 18px;
-      position: relative;
-      z-index: 1;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
     }
 
     .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      background: linear-gradient(180deg, rgba(18,25,34,.95), rgba(14,19,27,.96));
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 16px;
-      backdrop-filter: blur(6px);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .stat-number {
-      font-size: 1.7rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 4px;
-    }
-
-    .progress-wrap {
-      margin-top: 14px;
-    }
-
-    .progress-meta {
-      display: flex;
-      justify-content: space-between;
-      color: var(--muted);
-      font-size: 0.84rem;
-      margin-bottom: 8px;
-    }
-
-    .progress {
-      width: 100%;
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      width: 80%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 22px rgba(182,255,0,0.45);
-    }
-
-    .cta {
-      display: block;
-      width: 100%;
-      border: none;
-      border-radius: 18px;
-      padding: 18px 16px;
-      background: var(--accent);
-      color: #0a0a0a;
-      font-size: 1rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: transform .15s ease, box-shadow .15s ease;
-      box-shadow: 0 12px 28px rgba(182,255,0,0.22);
-    }
-
-    .cta:hover { transform: translateY(-1px); }
-    .cta:active { transform: translateY(1px); }
-
-    .small {
-      color: var(--muted);
-      font-size: 0.83rem;
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .section-title h2 {
-      font-size: 0.95rem;
-      margin: 0;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .people {
-      display: grid;
-      gap: 10px;
-    }
-
-    .person {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-top: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .person:first-child { border-top: 0; padding-top: 0; }
-
-    .person-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.15);
-      display: grid;
-      place-items: center;
-      color: #050505;
-      background: linear-gradient(135deg, var(--accent), #d4ff75);
-      font-weight: 900;
-      font-size: 0.9rem;
-    }
-
-    .name {
-      font-weight: 700;
-    }
-
-    .status {
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .status.paid { color: var(--accent); }
-    .status.pending { color: #ffbf69; }
-
-    .footer-note {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.5;
-      padding: 0 18px 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.68);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 12px;
-      z-index: 30;
-    }
-
-    .modal.active { display: flex; }
-
-    .sheet {
-      width: 100%;
-      max-width: 430px;
-      background: #0a0a0a;
-      border: 1px solid var(--line);
-      border-radius: 24px 24px 16px 16px;
-      padding: 18px;
       box-shadow: var(--shadow);
     }
 
-    .sheet h3 {
-      margin: 0 0 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 1rem;
+    .hero {
+      padding: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: rgba(0,208,132,.12);
+      color: #b5f4d8;
+      border: 1px solid rgba(0,208,132,.25);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.02;
+      margin: 0 0 12px;
+      max-width: 680px;
+      letter-spacing: -.03em;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.5;
+      max-width: 690px;
+      margin-bottom: 26px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button, .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+    button:hover, .btn:hover { transform: translateY(-1px); }
+    button:active, .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #062215;
+    }
+
+    .btn-secondary {
+      background: #1b2532;
+      color: var(--text);
+      border: 1px solid #2b3a50;
+    }
+
+    .grid-2 {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+
+    .phone {
+      align-self: start;
+      padding: 18px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .phone-shell {
+      max-width: 390px;
+      margin: 0 auto;
+      background: #0c1219;
+      border: 1px solid #223043;
+      border-radius: 34px;
+      padding: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), var(--shadow);
+    }
+
+    .screen {
+      background: linear-gradient(180deg, #111a24, #0d141d);
+      border-radius: 26px;
+      overflow: hidden;
+      min-height: 760px;
+      border: 1px solid rgba(255,255,255,.04);
+    }
+
+    .topbar {
+      padding: 16px 18px 10px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .gift-header {
+      padding: 10px 18px 18px;
+    }
+
+    .gift-title {
+      font-size: 27px;
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 10px;
+      letter-spacing: -.03em;
+    }
+
+    .gift-desc {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .gift-box {
+      background: linear-gradient(180deg, rgba(0,208,132,.10), rgba(0,208,132,.04));
+      border: 1px solid rgba(0,208,132,.18);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .gift-item {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .gift-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .gift-name { font-weight: 800; font-size: 16px; }
+    .gift-price { color: var(--muted); font-size: 14px; margin-top: 3px; }
+
+    .progress-wrap { margin-top: 14px; }
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .progress-big { font-size: 25px; font-weight: 900; }
+    .progress-small { color: var(--muted); font-size: 13px; }
+    .bar {
+      width: 100%;
+      height: 12px;
+      background: #1a2531;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #233246;
+    }
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #63f5b8);
+      border-radius: 999px;
+      transition: width .5s ease;
+    }
+
+    .section {
+      padding: 0 18px 18px;
+    }
+
+    .section h3 {
+      margin: 8px 0 12px;
+      font-size: 15px;
+      color: #dce7f8;
+      letter-spacing: -.01em;
+    }
+
+    .contributors {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .contrib {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #121b25;
+      border: 1px solid #213043;
+      font-size: 14px;
+    }
+
+    .pill-ok {
+      color: #baf5da;
+      background: rgba(0,208,132,.10);
+      border: 1px solid rgba(0,208,132,.18);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .amount-grid {
@@ -339,264 +287,334 @@
       margin-bottom: 14px;
     }
 
-    .amount-btn, .pay-btn, .close-btn {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px 10px;
-      font-weight: 800;
-      cursor: pointer;
-      background: var(--panel-2);
+    .amount-btn {
+      background: #121b25;
       color: var(--text);
+      border: 1px solid #233246;
+      border-radius: 14px;
+      padding: 13px 10px;
       text-align: center;
+      font-weight: 800;
     }
-
     .amount-btn.active {
-      background: var(--accent);
-      color: #050505;
-      border-color: transparent;
+      background: rgba(0,208,132,.12);
+      border-color: rgba(0,208,132,.34);
+      color: #bbf8dd;
     }
 
-    .custom-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .custom-row input {
-      flex: 1;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: var(--panel-2);
+    .label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input {
+      width: 100%;
+      background: #121b25;
+      border: 1px solid #233246;
       color: var(--text);
+      border-radius: 14px;
       padding: 14px;
-      font-size: 1rem;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus {
+      border-color: rgba(0,208,132,.45);
+      box-shadow: 0 0 0 4px rgba(0,208,132,.10);
     }
 
     .pay-btn {
       width: 100%;
       background: var(--accent);
-      color: #050505;
-      border: 0;
-      margin-top: 6px;
-    }
-
-    .close-btn {
-      width: 100%;
-      margin-top: 10px;
-      background: transparent;
-    }
-
-    .success {
-      text-align: center;
-      display: none;
-    }
-
-    .success.active { display: block; }
-
-    .pulse {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      margin: 8px auto 14px;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle, #d7ff7b 0%, var(--accent) 50%, rgba(182,255,0,0.15) 100%);
-      color: #050505;
-      font-size: 1.8rem;
+      color: #052214;
+      margin-top: 2px;
+      padding: 15px 18px;
+      border-radius: 16px;
+      font-size: 16px;
       font-weight: 900;
-      box-shadow: 0 0 30px rgba(182,255,0,0.35);
+    }
+
+    .tiny {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #12231c;
+      color: #d7ffe9;
+      border: 1px solid rgba(0,208,132,.25);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      display: none;
+      z-index: 20;
+      max-width: 320px;
+    }
+
+    .ideas {
+      margin-top: 24px;
+      padding: 22px;
+    }
+
+    .ideas h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -.02em;
+    }
+
+    .ideas-list {
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .idea-item {
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .emoji { margin-right: 8px; }
+
+    @media (max-width: 940px) {
+      .wrap { grid-template-columns: 1fr; }
+      .phone { position: static; }
+      .screen { min-height: unset; }
     }
   </style>
 </head>
 <body>
-  <div class="phone noise">
-    <div class="topbar">
-      <div class="brand">FEESTJE<span class="brand-dot">.</span></div>
-      <div class="chip">PRIVATE GIFT LINK</div>
-    </div>
+  <div class="wrap">
+    <section>
+      <div class="card hero">
+        <div class="badge">🎁 Eén link voor een groepscadeau</div>
+        <h1>Geen extra WhatsApp-groep. Geen Tikkie-chaos. Gewoon één cadeau-link.</h1>
+        <div class="sub">
+          Deze klikbare demo laat zien hoe mensen direct kunnen bijdragen aan een cadeau, live kunnen zien hoeveel er al is opgehaald en wie er al mee heeft gedaan.
+        </div>
+        <div class="cta-row">
+          <button class="btn-primary" id="focusDemo">Probeer de demo</button>
+          <button class="btn-secondary" id="simulate">Simuleer random bijdrage</button>
+        </div>
 
-    <section class="hero">
-      <div class="eyebrow">Gift drop</div>
-      <h1>Cadeau<br>voor Steyn</h1>
-      <div class="subline">Vrijdag 20:00 • Verjaardag • Amsterdam</div>
-      <div class="accent-line"></div>
+        <div class="grid-2">
+          <div class="stat">
+            <div class="stat-label">Belofte voor de gebruiker</div>
+            <div class="stat-value">1 link</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Wat je oplost</div>
+            <div class="stat-value">0 gedoe</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card ideas">
+        <h2>Waarom dit sterk is</h2>
+        <div class="ideas-list">
+          <div class="idea-item"><span class="emoji">✅</span>Iedereen ziet meteen het doelbedrag en de voortgang.</div>
+          <div class="idea-item"><span class="emoji">✅</span>De host hoeft niet handmatig bij te houden wie al betaald heeft.</div>
+          <div class="idea-item"><span class="emoji">✅</span>Het werkt direct vanuit een gedeelde link in WhatsApp, SMS of mail.</div>
+        </div>
+      </div>
     </section>
 
-    <main class="grid">
-      <section class="card">
-        <div class="stats">
-          <div>
-            <div class="stat-number" id="countDisplay">12</div>
-            <div class="stat-label">mensen doen mee</div>
+    <aside class="card phone" id="demo">
+      <div class="phone-shell">
+        <div class="screen">
+          <div class="topbar">
+            <span>giftlink.app/steyn-25</span>
+            <span>🔒 demo</span>
           </div>
-          <div>
-            <div class="stat-number">€<span id="amountDisplay">120</span></div>
-            <div class="stat-label">nu verzameld</div>
-          </div>
-        </div>
 
-        <div class="progress-wrap">
-          <div class="progress-meta">
-            <span>Doelbedrag</span>
-            <span>€<span id="amountMeta">120</span> / €150</span>
-          </div>
-          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-        </div>
-      </section>
+          <div class="gift-header">
+            <div class="gift-title">🎉 Steyn wordt 25!</div>
+            <div class="gift-desc">
+              We leggen samen in voor een cadeau. Iedereen kan direct bijdragen en live zien hoeveel er al is opgehaald.
+            </div>
 
-      <section class="card">
-        <button class="cta" id="openModalBtn">Doe mee aan het cadeau</button>
-        <div class="small">Kies zelf je bedrag en reken direct af.</div>
-      </section>
+            <div class="gift-box">
+              <div class="gift-item">
+                <div class="gift-icon">🎧</div>
+                <div>
+                  <div class="gift-name">AirPods Pro</div>
+                  <div class="gift-price">Doelbedrag: <span id="goalText">€250</span></div>
+                </div>
+              </div>
 
-      <section class="card">
-        <div class="section-title">
-          <h2>Wie hebben betaald</h2>
-          <span class="chip">LIVE</span>
-        </div>
-        <div class="people" id="peopleList">
-          <div class="person">
-            <div class="person-left">
-              <div class="avatar">J</div>
-              <div>
-                <div class="name">Jan</div>
-                <div class="status paid">€10 betaald</div>
+              <div class="progress-wrap">
+                <div class="progress-head">
+                  <div class="progress-big"><span id="raisedText">€0</span></div>
+                  <div class="progress-small">Nog <span id="leftText">€0</span> nodig</div>
+                </div>
+                <div class="bar"><div class="fill" id="fill"></div></div>
               </div>
             </div>
-            <div class="status paid">DONE</div>
           </div>
-          <div class="person">
-            <div class="person-left">
-              <div class="avatar">L</div>
-              <div>
-                <div class="name">Lisa</div>
-                <div class="status paid">€15 betaald</div>
-              </div>
+
+          <div class="section">
+            <h3>Al meegedaan</h3>
+            <div class="contributors" id="contributors"></div>
+
+            <h3>Doe mee</h3>
+            <div class="amount-grid" id="amountGrid">
+              <button class="amount-btn" data-value="5">€5</button>
+              <button class="amount-btn active" data-value="10">€10</button>
+              <button class="amount-btn" data-value="15">€15</button>
+              <button class="amount-btn" data-value="20">€20</button>
+              <button class="amount-btn" data-value="25">€25</button>
+              <button class="amount-btn" data-value="50">€50</button>
             </div>
-            <div class="status paid">DONE</div>
-          </div>
-          <div class="person">
-            <div class="person-left">
-              <div class="avatar">E</div>
-              <div>
-                <div class="name">Emma</div>
-                <div class="status paid">€10 betaald</div>
-              </div>
+
+            <div class="field">
+              <label class="label" for="nameInput">Je naam</label>
+              <input id="nameInput" placeholder="Bijv. Lisa" value="Jij" />
             </div>
-            <div class="status paid">DONE</div>
-          </div>
-          <div class="person">
-            <div class="person-left">
-              <div class="avatar">T</div>
-              <div>
-                <div class="name">Tom</div>
-                <div class="status pending">nog niet betaald</div>
-              </div>
+
+            <div class="field">
+              <label class="label" for="customInput">Ander bedrag (optioneel)</label>
+              <input id="customInput" placeholder="Bijv. 12,50" />
             </div>
-            <div class="status pending">PENDING</div>
+
+            <button class="pay-btn" id="payBtn">Betaal nu</button>
+            <div class="tiny">Demo-omgeving — er wordt geen echte betaling gedaan.</div>
           </div>
         </div>
-      </section>
-    </main>
-
-    <div class="footer-note">
-      <span>⚠️ Niet bedoeld voor Steyn.</span>
-      <span>Deadline: donderdag 18:00</span>
-    </div>
+      </div>
+    </aside>
   </div>
 
-  <div class="modal" id="modal">
-    <div class="sheet" id="sheetDefault">
-      <h3>Kies je bijdrage</h3>
-      <div class="amount-grid">
-        <button class="amount-btn" data-amount="5">€5</button>
-        <button class="amount-btn active" data-amount="10">€10</button>
-        <button class="amount-btn" data-amount="15">€15</button>
-      </div>
-      <div class="custom-row">
-        <input id="customAmount" type="number" min="1" step="1" placeholder="Ander bedrag" />
-      </div>
-      <button class="pay-btn" id="payBtn">Betaal €10</button>
-      <button class="close-btn" id="closeBtn">Sluiten</button>
-    </div>
-
-    <div class="sheet success" id="sheetSuccess">
-      <div class="pulse">✓</div>
-      <h3>Je doet mee</h3>
-      <p style="color: var(--muted); margin-top: 0; line-height: 1.6;">Je bijdrage is toegevoegd. Het totaal en het aantal deelnemers zijn bijgewerkt.</p>
-      <button class="pay-btn" id="doneBtn">Terug naar link</button>
-    </div>
-  </div>
+  <div class="toast" id="toast"></div>
 
   <script>
+    const goal = 250;
     let selectedAmount = 10;
-    let currentCount = 12;
-    let currentAmount = 120;
-    const goal = 150;
+    let contributors = [
+      { name: 'Lisa', amount: 15 },
+      { name: 'Mark', amount: 20 },
+      { name: 'Sophie', amount: 10 },
+      { name: 'Noor', amount: 25 }
+    ];
 
-    const modal = document.getElementById('modal');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const doneBtn = document.getElementById('doneBtn');
-    const payBtn = document.getElementById('payBtn');
-    const amountButtons = document.querySelectorAll('.amount-btn');
-    const customAmount = document.getElementById('customAmount');
-    const sheetDefault = document.getElementById('sheetDefault');
-    const sheetSuccess = document.getElementById('sheetSuccess');
+    const contributorsEl = document.getElementById('contributors');
+    const raisedText = document.getElementById('raisedText');
+    const leftText = document.getElementById('leftText');
+    const goalText = document.getElementById('goalText');
+    const fill = document.getElementById('fill');
+    const customInput = document.getElementById('customInput');
+    const nameInput = document.getElementById('nameInput');
+    const toast = document.getElementById('toast');
+    const amountButtons = Array.from(document.querySelectorAll('.amount-btn'));
 
-    const countDisplay = document.getElementById('countDisplay');
-    const amountDisplay = document.getElementById('amountDisplay');
-    const amountMeta = document.getElementById('amountMeta');
-    const progressBar = document.getElementById('progressBar');
-    const peopleList = document.getElementById('peopleList');
+    goalText.textContent = euro(goal);
 
-    function updatePayButton() {
-      payBtn.textContent = `Betaal €${selectedAmount}`;
+    function euro(value) {
+      return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(value);
     }
 
-    function updateTopStats() {
-      countDisplay.textContent = currentCount;
-      amountDisplay.textContent = currentAmount;
-      amountMeta.textContent = currentAmount;
-      const percentage = Math.min((currentAmount / goal) * 100, 100);
-      progressBar.style.width = percentage + '%';
+    function sumRaised() {
+      return contributors.reduce((sum, c) => sum + c.amount, 0);
     }
 
-    function setActiveAmount(button) {
-      amountButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      selectedAmount = Number(button.dataset.amount);
-      customAmount.value = '';
-      updatePayButton();
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => toast.style.display = 'none', 2600);
     }
 
-    amountButtons.forEach(button => {
-      button.addEventListener('click', () => setActiveAmount(button));
-    });
+    function render() {
+      contributorsEl.innerHTML = '';
+      contributors.forEach((c) => {
+        const row = document.createElement('div');
+        row.className = 'contrib';
+        row.innerHTML = `
+          <div>${escapeHtml(c.name)}</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <strong>${euro(c.amount)}</strong>
+            <span class="pill-ok">betaald</span>
+          </div>
+        `;
+        contributorsEl.appendChild(row);
+      });
 
-    customAmount.addEventListener('input', () => {
-      amountButtons.forEach(btn => btn.classList.remove('active'));
-      const value = Number(customAmount.value);
-      selectedAmount = value > 0 ? value : 10;
-      updatePayButton();
-    });
+      const raised = sumRaised();
+      const left = Math.max(goal - raised, 0);
+      const progress = Math.min((raised / goal) * 100, 100);
 
-    openModalBtn.addEventListener('click', () => {
-      modal.classList.add('active');
-      sheetDefault.style.display = 'block';
-      sheetSuccess.classList.remove('active');
-    });
+      raisedText.textContent = euro(raised);
+      leftText.textContent = euro(left);
+      fill.style.width = progress + '%';
 
-    closeBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
-
-    doneBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
+      if (raised >= goal) {
+        showToast('🎉 Cadeau compleet! Het doelbedrag is bereikt.');
       }
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    amountButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        amountButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedAmount = Number(btn.dataset.value);
+        customInput.value = '';
+      });
     });
+
+    document.getElementById('payBtn').addEventListener('click', () => {
+      const rawCustom = customInput.value.trim().replace(',', '.');
+      const customAmount = rawCustom ? Number(rawCustom) : null;
+      const amount = customAmount && customAmount > 0 ? customAmount : selectedAmount;
+      const name = nameInput.value.trim() || 'Anoniem';
+
+      if (!amount || amount <= 0 || Number.isNaN(amount)) {
+        showToast('Vul een geldig bedrag in.');
+        return;
+      }
+
+      contributors.unshift({ name, amount });
+      render();
+      showToast(`✅ ${name} heeft ${euro(amount)} bijgedragen`);
+      nameInput.value = 'Jij';
+      customInput.value = '';
+    });
+
+    document.getElementById('simulate').addEventListener('click', () => {
+      const names = ['Emma', 'Daan', 'Mila', 'Lucas', 'Yara', 'Finn'];
+      const amounts = [5, 10, 15, 20, 25];
+      const name = names[Math.floor(Math.random() * names.length)];
+      const amount = amounts[Math.floor(Math.random() * amounts.length)];
+      contributors.unshift({ name, amount });
+      render();
+      document.getElementById('demo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('focusDemo').addEventListener('click', () => {
+      document.getElementById('demo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    render();
+  </script>
+</body>
+</html>
